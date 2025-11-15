@@ -491,182 +491,188 @@ def träffskada(spelarens_attack):
 def smeden():
     global vill_gå_till_smeden
     global handel_med_smeden
-    if antal_kämpade_strider > 0 and besegrad_drako == True:
-        print("Du kommer snart få välja vem du vill slåss mot.")
-        print("Men innan ska du få välja om du vill gå till smeden för att köpa eller sälja rustning/vapen.")
-        while True:                           
-            if handel_med_smeden > 0:
-                vill_gå_till_smeden = input("Skriv ja eller nej beroende på om du vill gå till smeden eller inte: ").lower()
-            if vill_gå_till_smeden != "ja" and vill_gå_till_smeden != "nej":
-                print("\nFel input!")
-                print("Ange ett giltigt val!")
-            elif vill_gå_till_smeden == "ja":
-                print("Du valde att gå till smeden.")
-                while True:
-                    
-                    vill_köpa_eller_sälja = input("Vill du köpa eller sälja något? ").lower()
-                    if vill_köpa_eller_sälja in ["köpa", "sälja"]:
-                        break
-                    else: 
-                        print("Fel input!\n")
-                if vill_köpa_eller_sälja == "köpa":
-                    rensa_skärm()
-                    print("Hos smeden John finns följande rustningar och vapen.")
-                    print("1. Läderrustning: -0.5 skada och totala hp'n ökar till 32. Kostar 5 guldmynt. (erforderlig rank >= 2: Legosoldat)\n"
-                        "2. Järnrustning: -1.5 skada och totala hp'n ökar till 48. Kostar 10 guldmynt. (erforderlig rank = 3: Gladiator)")
-                    print("3. Kortsvärd: Gör 6-7 skada och har träffchansen 8 av 10. Kostar 7 guldmynt. (erforderlig rank >= 2: Legosoldat)\n" \
-                    "4. Kniv: Gör 4 skada och har träffchansen 3 av 5. Kostar 3 guldmynt. (erforderlig rank >= 2: Legosoldat)\n" \
-                    "5. Stridssvärd: Gör 7-8 skada och har träffchansen 7 av 10. Kostar 9 guldmynt. (erforderlig rank = 3: Gladiator) \n" \
-                    "6. Falx: En lång böjd kniv. Gör 5 skada och har träffchansen 8 av 11. Kostar 4 guldmynt. (erforderlig rank = 3: Gladiator)")
-                    print(f"Just nu har du {antal_guldmynt} guldmynt.")
-                    val_av_rustning_eller_vapen = input("Här kan du skriva ditt val av rustning/vapen, om du vill köpa ingenting kan du skriva nej eller 0: ").lower()
-                    if val_av_rustning_eller_vapen in rustning and (val_av_rustning_eller_vapen != "nej" or val_av_rustning_eller_vapen != "0"):
-                        #läderrustning
-                        if val_av_rustning_eller_vapen in ["läderrustning", "läder", "1"] and ingen_rustning == True and järnrustning == False  and läderrustning == False and antal_guldmynt >= 5:
-                            print("Du valde att köpa ett par läderrustning.\n")
-                            ingen_rustning = False
-                            läderrustning = True
-                            järnrustning = False
-                            spelarens_hp = 32 
-                            antal_guldmynt -= 5
-                        elif val_av_rustning_eller_vapen in ["läderrustning", "läder", "1"] and (järnrustning == True or läderrustning == True) and antal_guldmynt >= 5:
-                            print("Du har redan rustning.")
-                            print("För att köpa en annan rustning måste du först sälja din nuvarande rustning.\n")
-                        elif val_av_rustning_eller_vapen in ["läderrustning", "läder", "1"] and ingen_rustning == True and järnrustning == False  and läderrustning == False and antal_guldmynt < 5:
-                            print("Du har tyvärr inte tillräckligt med guldmynt.\n")
-                        #------------------------läderrustning-------------------#
-                        #järnrustning
-                        elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == True and läderrustning == False and järnrustning == False and antal_guldmynt >= 10:
-                            print("Du valde att köpa ett par järnrustning.\n")
-                            ingen_rustning = False
-                            läderrustning = False
-                            järnrustning = True
-                            spelarens_hp = 48
-                            antal_guldmynt -= 10
-                        elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == False and (läderrustning == True or järnrustning == True) and antal_guldmynt >= 10:
-                            print("Du har redan rustning.")
-                            print("För att köpa en annan rustning måste du först sälja din nuvarande rustning.\n")
-                        elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == True and läderrustning == False and järnrustning == False and antal_guldmynt < 10: 
-                            print("Du har tyvärr inte tillräckligt med guldmynt.\n")
-                        #---------------------------järnrustning--------------------------#
-                        #kortsvärd
-                        elif val_av_rustning_eller_vapen in ["kortsvärd", "3"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 7:
-                            print("Du valde att köpa en kortsvärd.\n")
-                            spelarens_attacker.append("kortsvärd")
-                            antal_guldmynt -= 7
-                        elif val_av_rustning_eller_vapen in ["kortsvärd", "3"] and len(spelarens_attacker) > 4 and antal_guldmynt >= 7:
-                            print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
-                        elif val_av_rustning_eller_vapen in ["kortsvärd", "3"] and len(spelarens_attacker) > 4 and antal_guldmynt < 7:
-                            print("Du har tyvärr inte tillräckligt med guldmynt.\n")
-                        #---------------------kortsvärd--------------------#
-                        #kniv
-                        elif val_av_rustning_eller_vapen in ["kniv", "4"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 3:
-                            print("Du valde att köpa en kniv")
-                            spelarens_attacker.append("kniv")
-                            antal_guldmynt -= 3
-                        elif val_av_rustning_eller_vapen in ["kniv", "4"] and len(spelarens_attacker) > 4 and antal_guldmynt >= 3:
-                            print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
-                        elif val_av_rustning_eller_vapen in ["kniv", "4"] and len(spelarens_attacker) < 4 and antal_guldmynt < 3:
-                            print("Du har tyvärr inte tillräckligt med guldmynt.\n")
-                        #--------------------kniv------------------------------#
-                        #stridssvärd
-                        elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 9:
-                            print("Du valde att köpa en stridssvärd.\n")
-                            spelarens_attacker.append("stridssvärd")
-                            antal_guldmynt -= 9
-                        elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) > 4 and antal_guldmynt >= 9:
-                            print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
-                        elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) < 4 and antal_guldmynt < 9:
-                            print("Du har tyvärr inte tillräckligt med guldmynt.")
-                        #-----------------stridssvärd-----------------#
-                        #falx
-                        elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 4:
-                            print("Du valde att köpa en falx.\n")
-                            spelarens_attacker.append("falx")
-                            antal_guldmynt -= 4
-                        elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) > 4 and antal_guldmynt >= 4:
-                            print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
-                        elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) < 4 and antal_guldmynt < 4:
-                            print("Du har tyvärr inte tillräckligt med guldmynt.\n")
-                        #-------------------falx-----------------#
+    global antal_guldmynt
+    global spelarens_hp
+    global spelarens_attacker
+    global ingen_rustning
+    global läderrustning
+    global järnrustning
 
-                    elif val_av_rustning_eller_vapen == "nej" or val_av_rustning_eller_vapen == "0":
-                        print("Du valde att köpa ingenting.")
-                        input("Tryck enter för att fortsätta.")
-                    else:
-                        print("Fel input!")
-                        print("Ange rätt val!")
-                
-                #Sälja vapen/rustning
-                elif vill_köpa_eller_sälja == "sälja":
-                    if len(spelarens_attacker) > 2 and ingen_rustning == False and (järnrustning == True or läderrustning == True):
-                        rensa_skärm()
-                        print("Hos smeden Richard kan du sälja följande vapen och rustning.")
-                        if "läderrustning" in spelarens_attacker:
-                            print("Läderrustning")
-                        elif "järnrustning" in spelarens_attacker:
-                            print("Järnrustning")
-                        if "kortsvärd" in spelarens_attacker:
-                            print("Kortsvärd")
-                        if "stridssvärd" in spelarens_attacker:
-                            print("Stridssvärd")
-                        if "kniv" in spelarens_attacker:
-                            print("Kniv")
-                        if "falx" in spelarens_attacker:
-                            print("Falx")
-                        print(f"Just nu har du {antal_guldmynt} guldmynt.")
-                        while True:
-                            vill_sälja_x = input("Skriv ditt val här om du vill inte sälja något skriv 0 eller nej: ").lower()
-                            if vill_sälja_x == "läderrustning" and läderrustning == True:
-                                print("Du valde att sälja din läderrustning.")
-                                print("Du fick 3 guldmynt från smeden.\n")
-                                ingen_rustning == True
-                                läderrustning == False
-                                järnrustning == False
-                                antal_guldmynt += 3
-                            elif vill_sälja_x == "järnrustning" and järnrustning == True:
-                                print("Du valde att sälja din järnrustning.")
-                                print("Du fick 6 guldmynt från smeden.\n")
-                                ingen_rustning == True
-                                läderrustning == False
-                                järnrustning == False
-                                antal_guldmynt += 6
-                            elif vill_sälja_x == "kortsvärd" and "kortsvärd" in spelarens_attacker:
-                                print("Du valde att sälja din kortsvärd.")
-                                print("Du fick 4 guldmynt från smeden.")
-                                spelarens_attacker.remove("kortsvärd")
-                                antal_guldmynt += 4
-                            elif vill_sälja_x == "kniv" and "kniv" in spelarens_attacker:
-                                print("Du valde att sälja din kniv:")
-                                print("Du fick 2 guldmynt från smeden.")
-                                spelarens_attacker.remove("kniv")
-                                antal_guldmynt += 2
-                            elif vill_sälja_x == "stridssvärd" and "stridssvärd" in spelarens_attacker:
-                                print("Du valde att sälja din stridssvärd.")
-                                print("Du fick 5 guldmynt från smeden.")
-                                spelarens_attacker.remove("stridssvärd")
-                                antal_guldmynt += 5
-                            elif vill_sälja_x == "falx" and "falx" in spelarens_attacker:
-                                print("Du valde att sälja din falx.")
-                                print("Du fick 3 guldmynt från smeden.")
-                                spelarens_attacker.remove("falx")
-                                antal_guldmynt += 3
-                            elif vill_sälja_x == "nej" or vill_sälja_x == "0":
-                                print("Du valde att sälja ingenting.")
-                                input("Tryck enter för att fortsätta.")
-                    elif ingen_rustning == True and läderrustning == False and järnrustning == False and len(spelarens_attacker) == 2:
-                        print("Du har ingenting att sälja.")
-                        input("Tryck enter för att fortsätta.")
+    while True:                           
+        vill_köpa_eller_sälja = input("Vill du köpa eller sälja något? ").lower()
+        if vill_köpa_eller_sälja in ["köpa", "sälja"]:
+            break
+        else: 
+            print("Fel input!\n")
+    if vill_köpa_eller_sälja == "köpa":
+        rensa_skärm()
+        print("Hos smeden John finns följande rustningar och vapen.")
+        print("1. Läderrustning: -0.5 skada och totala hp'n ökar till 32. Kostar 5 guldmynt. (erforderlig rank >= 2: Legosoldat)\n"
+            "2. Järnrustning: -1.5 skada och totala hp'n ökar till 48. Kostar 10 guldmynt. (erforderlig rank = 3: Gladiator)")
+        print("3. Kortsvärd: Gör 6-7 skada och har träffchansen 8 av 10. Kostar 7 guldmynt. (erforderlig rank >= 2: Legosoldat)\n" \
+        "4. Kniv: Gör 4 skada och har träffchansen 3 av 5. Kostar 3 guldmynt. (erforderlig rank >= 2: Legosoldat)\n" \
+        "5. Stridssvärd: Gör 7-8 skada och har träffchansen 7 av 10. Kostar 9 guldmynt. (erforderlig rank = 3: Gladiator) \n" \
+        "6. Falx: En lång böjd kniv. Gör 5 skada och har träffchansen 8 av 11. Kostar 4 guldmynt. (erforderlig rank = 3: Gladiator)")
+        print(f"Just nu har du {antal_guldmynt} guldmynt.")
+        while True:
+            val_av_rustning_eller_vapen = input("Här kan du skriva ditt val av rustning/vapen, om du vill köpa ingenting kan du skriva nej eller 0: ").lower()
+            if val_av_rustning_eller_vapen in rustning and (val_av_rustning_eller_vapen != "nej" and val_av_rustning_eller_vapen != "0"):
+                #läderrustning
+                if val_av_rustning_eller_vapen in ["läderrustning", "läder", "1"] and ingen_rustning == True and järnrustning == False  and läderrustning == False and antal_guldmynt >= 5:
+                    print("Du valde att köpa ett par läderrustning.\n")
+                    ingen_rustning = False
+                    läderrustning = True
+                    järnrustning = False
+                    spelarens_hp = 32 
+                    antal_guldmynt -= 5
+                    break
+                elif val_av_rustning_eller_vapen in ["läderrustning", "läder", "1"] and (järnrustning == True or läderrustning == True) and antal_guldmynt >= 5:
+                    print("Du har redan rustning.")
+                    print("För att köpa en annan rustning måste du först sälja din nuvarande rustning.\n")
+                    break
+                elif val_av_rustning_eller_vapen in ["läderrustning", "läder", "1"] and ingen_rustning == True and järnrustning == False  and läderrustning == False and antal_guldmynt < 5:
+                    print("Du har tyvärr inte tillräckligt med guldmynt.\n")
+                    break
+                #------------------------läderrustning-------------------#
+                #järnrustning
+                elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == True and läderrustning == False and järnrustning == False and antal_guldmynt >= 10:
+                    print("Du valde att köpa ett par järnrustning.\n")
+                    ingen_rustning = False
+                    läderrustning = False
+                    järnrustning = True
+                    spelarens_hp = 48
+                    antal_guldmynt -= 10
+                    break
+                elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == False and (läderrustning == True or järnrustning == True) and antal_guldmynt >= 10:
+                    print("Du har redan rustning.")
+                    print("För att köpa en annan rustning måste du först sälja din nuvarande rustning.\n")
+                    break
+                elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == True and läderrustning == False and järnrustning == False and antal_guldmynt < 10: 
+                    print("Du har tyvärr inte tillräckligt med guldmynt.\n")
+                    break
+                #---------------------------järnrustning--------------------------#
+                #kortsvärd
+                elif val_av_rustning_eller_vapen in ["kortsvärd", "3"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 7:
+                    print("Du valde att köpa en kortsvärd.\n")
+                    spelarens_attacker.append("kortsvärd")
+                    antal_guldmynt -= 7
+                    break
+                elif val_av_rustning_eller_vapen in ["kortsvärd", "3"] and len(spelarens_attacker) >= 4 and antal_guldmynt >= 7:
+                    print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
+                    break
+                elif val_av_rustning_eller_vapen in ["kortsvärd", "3"] and len(spelarens_attacker) > 4 and antal_guldmynt < 7:
+                    print("Du har tyvärr inte tillräckligt med guldmynt.\n")
+                    break
+                #---------------------kortsvärd--------------------#
+                #kniv
+                elif val_av_rustning_eller_vapen in ["kniv", "4"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 3:
+                    print("Du valde att köpa en kniv")
+                    spelarens_attacker.append("kniv")
+                    antal_guldmynt -= 3
+                    break
+                elif val_av_rustning_eller_vapen in ["kniv", "4"] and len(spelarens_attacker) >= 4 and antal_guldmynt >= 3:
+                    print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
+                    break
+                elif val_av_rustning_eller_vapen in ["kniv", "4"] and len(spelarens_attacker) < 4 and antal_guldmynt < 3:
+                    print("Du har tyvärr inte tillräckligt med guldmynt.\n")
+                    break
+                #--------------------kniv------------------------------#
+                #stridssvärd
+                elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 9:
+                    print("Du valde att köpa en stridssvärd.\n")
+                    spelarens_attacker.append("stridssvärd")
+                    antal_guldmynt -= 9
+                    break
+                elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) >= 4 and antal_guldmynt >= 9:
+                    print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
+                    break
+                elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) < 4 and antal_guldmynt < 9:
+                    print("Du har tyvärr inte tillräckligt med guldmynt.")
+                    break
 
-            elif vill_gå_till_smeden == "nej":
-                print("Du valde att inte gå till smeden.")
+                #-----------------stridssvärd-----------------#
+                #falx
+                elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 4:
+                    print("Du valde att köpa en falx.\n")
+                    spelarens_attacker.append("falx")
+                    antal_guldmynt -= 4
+                    break
+                elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) >= 4 and antal_guldmynt >= 4:
+                    print("Du måste sälja en av dina vapen, eftersom du kan inte bära mer än två vapen.\n")
+                    break
+                elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) < 4 and antal_guldmynt < 4:
+                    print("Du har tyvärr inte tillräckligt med guldmynt.\n")
+                    break
+                #-------------------falx-----------------#
+
+            elif val_av_rustning_eller_vapen == "nej" or val_av_rustning_eller_vapen == "0":
+                print("Du valde att köpa ingenting.")
                 input("Tryck enter för att fortsätta.")
                 break
+            else:
+                print("Fel input!")
+                print("Ange rätt val!")
 
-
-            if (vill_gå_till_smeden == "ja" or vill_gå_till_smeden == "nej"):
-                break
-    handel_med_smeden += 1
+    #Sälja vapen/rustning
+    elif vill_köpa_eller_sälja == "sälja":
+        if len(spelarens_attacker) > 2 and ingen_rustning == False and (järnrustning == True or läderrustning == True):
+            rensa_skärm()
+            print("Hos smeden Richard kan du sälja följande vapen och rustning.")
+            if "läderrustning" in spelarens_attacker:
+                print("Läderrustning")
+            elif "järnrustning" in spelarens_attacker:
+                print("Järnrustning")
+            if "kortsvärd" in spelarens_attacker:
+                print("Kortsvärd")
+            if "stridssvärd" in spelarens_attacker:
+                print("Stridssvärd")
+            if "kniv" in spelarens_attacker:
+                print("Kniv")
+            if "falx" in spelarens_attacker:
+                print("Falx")
+            print(f"Just nu har du {antal_guldmynt} guldmynt.")
+            while True:
+                vill_sälja_x = input("Skriv ditt val här om du vill inte sälja något skriv 0 eller nej: ").lower()
+                if vill_sälja_x == "läderrustning" and läderrustning == True:
+                    print("Du valde att sälja din läderrustning.")
+                    print("Du fick 3 guldmynt från smeden.\n")
+                    ingen_rustning = True
+                    läderrustning = False
+                    järnrustning = False
+                    antal_guldmynt += 3
+                elif vill_sälja_x == "järnrustning" and järnrustning == True:
+                    print("Du valde att sälja din järnrustning.")
+                    print("Du fick 6 guldmynt från smeden.\n")
+                    ingen_rustning = True
+                    läderrustning = False
+                    järnrustning = False
+                    antal_guldmynt += 6
+                elif vill_sälja_x == "kortsvärd" and "kortsvärd" in spelarens_attacker:
+                    print("Du valde att sälja din kortsvärd.")
+                    print("Du fick 4 guldmynt från smeden.")
+                    spelarens_attacker.remove("kortsvärd")
+                    antal_guldmynt += 4
+                elif vill_sälja_x == "kniv" and "kniv" in spelarens_attacker:
+                    print("Du valde att sälja din kniv:")
+                    print("Du fick 2 guldmynt från smeden.")
+                    spelarens_attacker.remove("kniv")
+                    antal_guldmynt += 2
+                elif vill_sälja_x == "stridssvärd" and "stridssvärd" in spelarens_attacker:
+                    print("Du valde att sälja din stridssvärd.")
+                    print("Du fick 5 guldmynt från smeden.")
+                    spelarens_attacker.remove("stridssvärd")
+                    antal_guldmynt += 5
+                elif vill_sälja_x == "falx" and "falx" in spelarens_attacker:
+                    print("Du valde att sälja din falx.")
+                    print("Du fick 3 guldmynt från smeden.")
+                    spelarens_attacker.remove("falx")
+                    antal_guldmynt += 3
+                elif vill_sälja_x == "nej" or vill_sälja_x == "0":
+                    print("Du valde att sälja ingenting.")
+                    input("Tryck enter för att fortsätta.")
+        elif ingen_rustning == True and läderrustning == False and järnrustning == False and len(spelarens_attacker) == 2:
+            print("Du har ingenting att sälja.")
+            input("Tryck enter för att fortsätta.")
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------#
@@ -697,25 +703,43 @@ f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.\n"
 "Publiken kommer att ge er vapen endast i striden mot Drako annars kommer du behöva köpa själv.\n" \
 "striden består av 3 rundor, om ni båda överlever då slutar stridet efter tredje rundan\n"    
 "Målet är att befria sig genom att vinna mot alla 3 och vid död avslutar spelet.")
+        
     if antal_kämpade_strider > 0:
+
         ####nedan ligger smeden####
-        smeden()
-        handel_med_smeden += 1
-        while True:
-            if vill_gå_till_smeden == "ja":
-                while True:
-                    if vill_gå_till_smeden == "ja":
+        if besegrad_drako == True:
+            vill_köpa_eller_sälja_mer_bool = True
+            print("Du kommer snart få välja vem du vill slåss mot.")
+            print("Men innan ska du få välja om du vill gå till smeden för att köpa eller sälja rustning/vapen.")
+            while True:      
+                vill_gå_till_smeden = input("Skriv ja eller nej beroende på om du vill gå till smeden eller inte: ").lower()
+                if vill_gå_till_smeden != "ja" and vill_gå_till_smeden != "nej":
+                    print("\nFel input!")
+                    print("Ange ett giltigt val!\n")
+                    
+                elif vill_gå_till_smeden == "ja":
+                    print("Du valde att gå till smeden.")
+                    smeden()
+                    while True:                       
                         vill_köpa_eller_sälja_mer = input("Vill du köpa eller sälja något mer? ja/nej: ").lower()
-                    if vill_köpa_eller_sälja_mer == "nej" or vill_köpa_eller_sälja_mer == "ja":
-                        break
-                    elif vill_köpa_eller_sälja_mer != "nej" and vill_köpa_eller_sälja_mer != "ja":
-                        print("Fel input!\n")
-                if vill_köpa_eller_sälja_mer == "ja":
-                    print("Du valde att köpa eller sälja något mer.")
-                    smeden(handel_med_smeden)
-                elif vill_köpa_eller_sälja_mer == "nej":
-                    print("Du valde att inte köpa eller sälja något mer.")
+                        if vill_köpa_eller_sälja_mer != "nej" and vill_köpa_eller_sälja_mer != "ja":
+                            print("Fel input!\n")
+                        elif vill_köpa_eller_sälja_mer == "ja":
+                            print("Du valde att köpa eller sälja något mer.")
+                            smeden()
+                        elif vill_köpa_eller_sälja_mer == "nej":
+                            print("Du valde att inte köpa eller sälja något mer.")
+                            input("Tryck enter för att fortsätta.")
+                            rensa_skärm()
+                            vill_köpa_eller_sälja_mer_bool = False
+                            break  
+                elif vill_gå_till_smeden == "nej":
+                    print("Du valde att inte gå till smeden.")
+                    input("Tryck enter för att fortsätta.")
                     break
+                if vill_köpa_eller_sälja_mer_bool == False:
+                    break
+        
 
 ##############     #smeden avslutas     ###########
 
@@ -900,8 +924,8 @@ f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.\n"
                         print("Fel input!")
 
                     if vill_ha_vapen == "ja" or vill_ha_vapen == "nej":
+                        input("Tryck enter för att fortsätta. ")
                         break
-                    input("Tryck enter för att fortsätta. ")
 
         if runda == 3 and spelarens_hp > 0 and motståndarens_hp > 0:
             print("Spelet har avslutats och ingen dog.")
