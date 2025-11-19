@@ -615,21 +615,21 @@ def smeden():
 
     #Sälja vapen/rustning
     elif vill_köpa_eller_sälja == "sälja":
-        if len(spelarens_attacker) > 2 and ingen_rustning == False and (järnrustning == True or läderrustning == True):
+        if len(spelarens_attacker) > 2 or (ingen_rustning == False and (järnrustning == True or läderrustning == True)):
             rensa_skärm()
             print("Hos smeden Richard kan du sälja följande vapen och rustning.")
             if läderrustning == True:
-                print("Läderrustning")
+                print("Läderrustning. +3 guldmynt.")
             elif järnrustning == True:
-                print("Järnrustning")
+                print("Järnrustning. +6 guldmynt.")
             if "kortsvärd" in spelarens_attacker:
-                print("Kortsvärd")
+                print("Kortsvärd. +4 guldmynt.")
             if "stridssvärd" in spelarens_attacker:
-                print("Stridssvärd")
+                print("Stridssvärd. +5 guldmynt.")
             if "kniv" in spelarens_attacker:
-                print("Kniv")
+                print("Kniv. +2 guldmynt")
             if "falx" in spelarens_attacker:
-                print("Falx")
+                print("Falx. +3 guldmynt.")
             print(f"Just nu har du {antal_guldmynt} guldmynt.")
             while True:
                 vill_sälja_x = input("Skriv ditt val här om du vill inte sälja något skriv 0 eller nej: ").lower()
