@@ -1,8 +1,10 @@
 import random
 from colorama import Style, Fore, Back 
 import os
+import pygame 
 #from playsound3 import playsound   
-
+pygame.init()
+pygame.mixer.init()
 #---------------------------------------VARIABLER-----------------------------------------#
 
 antal_kämpade_strider = 0
@@ -35,6 +37,12 @@ rustning = ["1", "läder", "läderrustning", "2", "järn", "järnrustning", "3",
 
 
 #----------------------------------------------INTRO-------------------------------------------#
+while True:
+    bossmusik_ja_eller_nej = input("Vill du ha bossmusik på? ja/nej: ").lower()
+    if bossmusik_ja_eller_nej not in ["ja", "nej"]:
+        print("Fel input!")
+    else:
+        break
 
 print(f"===========\n{Fore.RED}GLADIATORER{Style.RESET_ALL}\n===========")
 
@@ -513,7 +521,7 @@ def smeden():
         "4. Kniv: Gör 4 skada och har träffchansen 3 av 5. Kostar 3 guldmynt. (erforderlig rank >= 2: Legosoldat)\n" \
         "5. Stridssvärd: Gör 7-8 skada och har träffchansen 7 av 10. Kostar 9 guldmynt. (erforderlig rank = 3: Gladiator) \n" \
         "6. Falx: En lång böjd kniv. Gör 5 skada och har träffchansen 8 av 11. Kostar 4 guldmynt. (erforderlig rank = 3: Gladiator)")
-        print(f"Just nu har du {antal_guldmynt} guldmynt.")
+        print(f"Din nuvarande rank är {rank_nummer}: {rank_namn} och just nu har du {antal_guldmynt} guldmynt.")
         while True:
             val_av_rustning_eller_vapen = input("Här kan du skriva ditt val av rustning/vapen, om du vill köpa ingenting kan du skriva nej eller 0: ").lower()
             if val_av_rustning_eller_vapen in rustning and (val_av_rustning_eller_vapen != "nej" and val_av_rustning_eller_vapen != "0"):
@@ -785,6 +793,10 @@ f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.\n"
             motståndarens_attacker.append("kortsvärd")
         elif val_av_motståndare == "Dominous" and rank_nummer == 3:
             motståndarens_hp += dominous_aurelius_valcar_hp
+            if bossmusik_ja_eller_nej == "ja": ###---BOSSMUSIK---###
+                bossmusik = pygame.mixer.Sound("bossmusik.mp3")
+                bossmusik.play()
+
             motståndarens_attacker.append("morgonstjärna")#Dominous's ikoniska vapen morgonstjärnan
 
         if rank_nummer == 1 and val_av_motståndare == "Maximus":
@@ -939,6 +951,8 @@ f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.\n"
         if runda == 3 and spelarens_hp > 0 and motståndarens_hp > 0:
             print("Spelet har avslutats och ingen dog.")
             antal_kämpade_strider += 1
+            if val_av_motståndare == "Dominous" and bossmusik_ja_eller_nej == "ja":
+                bossmusik.stop()
 
 
         if (runda == 1 or runda == 2) and (val_av_motståndare == "Maximus" or val_av_motståndare == "Dominous"):
