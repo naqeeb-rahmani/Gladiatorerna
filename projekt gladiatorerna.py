@@ -94,7 +94,7 @@ def maximus_val_av_attack(): # Här väljer maxmimus fram en attack baserad på 
         return random.choice(["näve", "näve", "kortsvärd", "kortsvärd", "kortsvärd"])
     
 
-    #EJ FÄRDIG ÄN
+
 def dominous_aurelius_valcar_val_av_attack():
     if spelarens_hp <= 8 and ingen_rustning == True:
         return "morgonstjärna"
@@ -111,7 +111,7 @@ def dominous_aurelius_valcar_val_av_attack():
     elif läderrustning == True or ingen_rustning == True:
         return random.choice(["morgonstjärna", "morgonstjärna", "morgonstjärna", "näve", "spark"])
 
-    ######################
+    
     
 #Funktionen nedan rensar kärmet.#
 def rensa_skärm():              
@@ -146,7 +146,7 @@ def träffchans_morgonstjärna():
 def träffchans_stridssvärd():
     return random.choice(["träff", "träff", "träff", "träff", "träff", "träff", "träff", "miss", "miss", "miss"])
 
-def träffchans_flax():
+def träffchans_falx():
     return random.choice(["träff", "träff", "träff", "träff", "träff", "träff", "träff", "träff", "miss", "miss", "miss"])
 
 
@@ -177,7 +177,7 @@ def träffskada(spelarens_attack):
     spelarens_träffchans_klubba = träffchans_klubba()
     spelarens_träffchans_kortsvärd = träffchans_kortsvärd()
     spelarens_träffchans_stridssvärd = träffchans_stridssvärd()
-    spelarens_träffchans_flax = träffchans_flax()
+    spelarens_träffchans_falx = träffchans_falx()
 
     motståndarens_träffchans_näve = träffchans_näve()
     motståndarens_träffchans_spark = träffchans_spark()
@@ -290,7 +290,7 @@ def träffskada(spelarens_attack):
     elif spelarens_attack == "kortsvärd" and spelarens_träffchans_kortsvärd == "miss":
         print("Du missar.")
 
-    if spelarens_attack == "striddsvärd" and spelarens_träffchans_stridssvärd == "träff":
+    elif spelarens_attack == "stridssvärd" and spelarens_träffchans_stridssvärd == "träff":
         if groteskt == False:
             print(f"Du huggar {val_av_motståndare} med stridssvärdet.")
         elif groteskt == True:
@@ -300,18 +300,18 @@ def träffskada(spelarens_attack):
                 if val_av_motståndare == "Dominous" and groteskt == True:
                     print(random.choice(["Ditt stridssvärd genomborrar Dominous's rustning och träffar honom i sidan av magen.", "Ditt stridssvärd genomborrar Dominous's rustning och träffar honom vid axeln, blod rinner snabbt från hans axel."]))
             if val_av_motståndare == "Dominous": #Jag har bara subtraherat Dominous hp eftersom vapnet går endast och köpa på rank 3, och då har man besegrat alla andra.
-                motståndarens_hp -= random.randint([5,6])
-    elif spelarens_attack == "stridssvärd" and träffchans_stridssvärd == "miss":
+                motståndarens_hp -= random.randint(5,6)
+    elif spelarens_attack == "stridssvärd" and spelarens_träffchans_stridssvärd == "miss":
         print("Du missar.")
                                                                             ####  Attack beskrivningen för falx och striddsvärd kan förbättras #### ## fortsätta senare ##
-    if spelarens_attack == "falx" and träffchans_flax == "träff":
+    elif spelarens_attack == "falx" and spelarens_träffchans_falx == "träff":
         if groteskt == False:
             print(f"Du huggar {val_av_motståndare} med falxet.")
         elif groteskt == True:
             print(f"Du hugger {val_av_motståndare} med falxet och blod rinner. {val_av_motståndare} stirrar på dig med lömsk blick.")
         if val_av_motståndare == "Dominous": #Jag har bara subtraherat Dominous hp eftersom vapnet går endast och köpa på rank 3, och då har man besegrat alla andra.
             motståndarens_hp -= 3
-    elif spelarens_attack == "falx" and spelarens_träffchans_flax == "miss":
+    elif spelarens_attack == "falx" and spelarens_träffchans_falx == "miss":
         print("Du missar.")
 
 
@@ -327,7 +327,7 @@ def träffskada(spelarens_attack):
             print("\nGrattis, du har blivit befordrad till rank 2: Legosoldat\n")
         elif val_av_motståndare == "Maximus":
             besegrad_maximus = True
-            rank_namn = 3
+            rank_nummer = 3
             rank_namn = "Gladiator"
             print("Grattis, du har blivit befordrad till rank 3: Gladiator")
         elif val_av_motståndare == "Dominous":
@@ -457,7 +457,7 @@ def träffskada(spelarens_attack):
     elif motståndarens_attack == "kortsvärd" and motståndarens_träffchans_kortsvärd == "miss":
         print(f"{val_av_motståndare} missar.")
         
-    elif motståndarens_attack == "morgonstjärna" and träffchans_morgonstjärna == "träff":
+    elif motståndarens_attack == "morgonstjärna" and motståndarens_träffchans_morgonstjärna == "träff":
         if groteskt == False:
             print(f"{val_av_motståndare} träffar dig med morgonstjärnan.")
         elif groteskt == True:
@@ -470,18 +470,18 @@ def träffskada(spelarens_attack):
             elif spelarens_hp > 10 and (läderrustning == True or ingen_rustning == True):
                 print(f"{val_av_motståndare} träffar dig i bröstet med morgonstjärnan vilket får blod att stänka överallt.")
             else: 
-                print("Morgonstjärnan träffar dig riktigt hårt i ansiktet vilket gör att du börjar att spitta blod.")
+                print("Morgonstjärnan träffar dig riktigt hårt i ansiktet vilket gör att du spottar blod.")
         if ingen_rustning == True:
             spelarens_hp -= 8
         elif läderrustning == True:
             spelarens_hp -= 7.5
         elif järnrustning == True:
             spelarens_hp -= 6.5
-    elif motståndarens_attack == "morgonstjärna" and träffchans_morgonstjärna == "miss":
+    elif motståndarens_attack == "morgonstjärna" and motståndarens_träffchans_morgonstjärna == "miss":
         print(f"{val_av_motståndare} missar.")
 
     if spelarens_hp < 1:
-        print("Du faller til marken.")
+        print("Du faller till marken.")
         print("╔══════════════════════════════════╗\n"
               "║  ☠️       D U   D Ö R       ☠️  ║\n"
               "╚══════════════════════════════════╝\n")
@@ -640,6 +640,7 @@ def smeden():
                     läderrustning = False
                     järnrustning = False
                     antal_guldmynt += 3
+                    break
                 elif vill_sälja_x == "järnrustning" and järnrustning == True:
                     print("Du valde att sälja din järnrustning.")
                     print("Du fick 6 guldmynt från smeden.\n")
@@ -647,29 +648,37 @@ def smeden():
                     läderrustning = False
                     järnrustning = False
                     antal_guldmynt += 6
+                    break
                 elif vill_sälja_x == "kortsvärd" and "kortsvärd" in spelarens_attacker:
                     print("Du valde att sälja din kortsvärd.")
                     print("Du fick 4 guldmynt från smeden.")
                     spelarens_attacker.remove("kortsvärd")
                     antal_guldmynt += 4
+                    break
                 elif vill_sälja_x == "kniv" and "kniv" in spelarens_attacker:
                     print("Du valde att sälja din kniv:")
                     print("Du fick 2 guldmynt från smeden.")
                     spelarens_attacker.remove("kniv")
                     antal_guldmynt += 2
+                    break
                 elif vill_sälja_x == "stridssvärd" and "stridssvärd" in spelarens_attacker:
                     print("Du valde att sälja din stridssvärd.")
                     print("Du fick 5 guldmynt från smeden.")
                     spelarens_attacker.remove("stridssvärd")
                     antal_guldmynt += 5
+                    break
                 elif vill_sälja_x == "falx" and "falx" in spelarens_attacker:
                     print("Du valde att sälja din falx.")
                     print("Du fick 3 guldmynt från smeden.")
                     spelarens_attacker.remove("falx")
                     antal_guldmynt += 3
+                    break
                 elif vill_sälja_x == "nej" or vill_sälja_x == "0":
                     print("Du valde att sälja ingenting.")
                     input("Tryck enter för att fortsätta.")
+                    break
+                else:
+                    print("Fel input!\n")
         elif ingen_rustning == True and läderrustning == False and järnrustning == False and len(spelarens_attacker) == 2:
             print("Du har ingenting att sälja.")
             input("Tryck enter för att fortsätta.")
