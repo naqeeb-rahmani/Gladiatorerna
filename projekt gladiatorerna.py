@@ -3,8 +3,8 @@ from colorama import Style, Fore, Back
 import os
 import pygame 
 #from playsound3 import playsound   
-pygame.init()
-pygame.mixer.init()
+pygame.init() #initierar pygame
+pygame.mixer.init() #initierar ljudmodulen i pygame
 #---------------------------------------VARIABLER-----------------------------------------#
 
 antal_kämpade_strider = 0
@@ -214,7 +214,10 @@ def träffskada(spelarens_attack):
         if groteskt == False:
             print(f"\nDin spark träffar {val_av_motståndare}.")
         elif groteskt == True:
-            print(f"\nDin kraftfull spark träffar {val_av_motståndare} i sidan av magen och han tappade nästan ballansen. ")
+            if val_av_motståndare in ["Drako", "Maximus"] and motståndarens_hp < 2:
+                print(f"Din kraftfull spark träffer {val_av_motståndare} i sidan av magen och han tappade balansen.")
+            else:
+                print(f"\nDin kraftfull spark träffar {val_av_motståndare} i sidan av magen och han tappade nästan balansen.")
         if val_av_motståndare == "Drako":
             motståndarens_hp -= random.randint(1,2)
         elif val_av_motståndare == "Maximus":
@@ -326,7 +329,7 @@ def träffskada(spelarens_attack):
     if motståndarens_hp < 1: 
         print(f"{val_av_motståndare} faller till marken.")
         print("╔══════════════════════════╗\n"
-              "║  ⚔️  D U   V A N N  ⚔️  ║\n" 
+              "║   ⚔️  D U   V A N N  ⚔️    ║\n" 
               "╚══════════════════════════╝\n")
         if val_av_motståndare == "Drako":
             besegrad_drako = True 
@@ -491,7 +494,7 @@ def träffskada(spelarens_attack):
     if spelarens_hp < 1:
         print("Du faller till marken.")
         print("╔══════════════════════════════════╗\n"
-              "║  ☠️       D U   D Ö R       ☠️  ║\n"
+              "║   ☠️       D U   D Ö R       ☠️    ║\n"
               "╚══════════════════════════════════╝\n")
         exit()
 
@@ -558,6 +561,9 @@ def smeden():
                 elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == True and läderrustning == False and järnrustning == False and antal_guldmynt < 10 and rank_nummer >= 3: 
                     print("Du har tyvärr inte tillräckligt med guldmynt.\n")
                     break
+                elif val_av_rustning_eller_vapen in ["järnrustning", "järn", "2"] and ingen_rustning == True and läderrustning == False and järnrustning == False and antal_guldmynt < 10 and rank_nummer < 3:
+                    print("För att kunna köpa rustningen måste din rank vara 3.")
+                    break
                 #---------------------------järnrustning--------------------------#
                 #kortsvärd
                 elif val_av_rustning_eller_vapen in ["kortsvärd", "3"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 7 and rank_nummer >= 2:
@@ -597,7 +603,9 @@ def smeden():
                 elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) < 4 and antal_guldmynt < 9 and rank_nummer >= 3:
                     print("Du har tyvärr inte tillräckligt med guldmynt.")
                     break
-
+                elif val_av_rustning_eller_vapen in ["stridssvärd", "5"] and len(spelarens_attacker) < 4 and antal_guldmynt < 9 and rank_nummer < 3:
+                    print("För att kunna köpa vapnet måste din rank vara 3.")
+                    break
                 #-----------------stridssvärd-----------------#
                 #falx
                 elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 4 and rank_nummer >= 3:
@@ -610,6 +618,9 @@ def smeden():
                     break
                 elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) < 4 and antal_guldmynt < 4 and rank_nummer >= 3:
                     print("Du har tyvärr inte tillräckligt med guldmynt.\n")
+                    break
+                elif val_av_rustning_eller_vapen in ["falx", "6"] and len(spelarens_attacker) < 4 and antal_guldmynt >= 4 and rank_nummer < 3:
+                    print("För att kunna köpa vapnet måste din rank vara 3.\n")
                     break
                 #-------------------falx-----------------#
 
@@ -714,8 +725,8 @@ while True:
 f"1. Drako: {Fore.RED}26{Style.RESET_ALL}hp har ingen rustning och kan ingen strategi. (erforderlig rank = 1)\n" \
 f"2. Maximus: {Fore.RED}34{Style.RESET_ALL}hp, har läderrustning, tar 1 mindre skada per attack, kör strategiskt och har vapnet den blodtörstiga kortsvärdet. (erforderlig rank = 2)\n" 
 f"3. Domnious Aurelius Valcar: {Fore.RED}50{Style.RESET_ALL}hp, har bättre rustning än Maximus, tar 2 mindre skada per attack. Han har aldrig blivit besegrat och har sin egen ikoniska vapen: Den stora Morgonstjärnan. (erforderlig rank = 3)\n"
-f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.\n"
-"Ni kommer att befinna er på en romersk arena omgivna av en förväntsfull publik.\n" \
+f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.")
+        print("Ni kommer att befinna er på en romersk arena omgivna av en förväntsfull publik.\n" \
 "Just nu har ni inga vapen, men efter varje runda slänger publiken en vapen i arenan.\n" \
 "Publiken kommer att ge er vapen endast i striden mot Drako annars kommer du behöva köpa själv.\n" \
 "striden består av 3 rundor, om ni båda överlever då slutar stridet efter tredje rundan\n"    
@@ -762,15 +773,15 @@ f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.\n"
 
         print("\nNedan kan du välja vem du vill slå mot.")
         if besegrad_drako == True:
-            print(f"1. Drako: {Fore.RED}26{Style.RESET_ALL}hp, har ingen rustning och kan ingen strategi. (Besegrad, död)")
+            print(f"1. Drako: {Fore.RED}26{Style.RESET_ALL}hp, har ingen rustning och kan ingen strategi. ({Fore.RED}Besegrad{Style.RESET_ALL}, {Fore.RED}död{Style.RESET_ALL} 💀)")
         else:
             print(f"1. Drako: {Fore.RED}26{Style.RESET_ALL}hp, har ingen rustning och kan ingen strategi. (erforderlig rank = 1 (tiggare))")    
         if besegrad_maximus == True:
-            print(f"2. Maximus: {Fore.RED}34{Style.RESET_ALL}hp, har rustning, kör strategiskt och har vapnet den blodtörstiga kortsvärdet. (Besegrad, död)")
+            print(f"2. Maximus: {Fore.RED}34{Style.RESET_ALL}hp, har rustning, kör strategiskt och har vapnet den blodtörstiga kortsvärdet. ({Fore.RED}Besegrad{Style.RESET_ALL}, {Fore.RED}död{Style.RESET_ALL} 💀)")
         else:
             print(f"2. Maximus: {Fore.RED}34{Style.RESET_ALL}hp, har rustning, kör strategiskt och har vapnet den blodtörstiga kortsvärdet. (erforderlig rank = 2 (legosoldat))")
         if besegrad_dominous == True:
-            print(f"3. Domnious Aurelius Valcar: {Fore.RED}50{Style.RESET_ALL}hp, har bättre rustning än Maximus och har aldrig blivit besegrat av någon förutom dig. (Besegrad, död)")
+            print(f"3. Domnious Aurelius Valcar: {Fore.RED}50{Style.RESET_ALL}hp, har bättre rustning än Maximus och har aldrig blivit besegrat av någon förutom dig. ({Fore.RED}Besegrad{Style.RESET_ALL}, {Fore.RED}död{Style.RESET_ALL} 💀)")
         else:
             print(f"3. Domnious Aurelius Valcar: {Fore.RED}50{Style.RESET_ALL}hp, har bättre rustning än Maximus och har aldrig blivit besegrat. (erforderlig rank = 3 (gladiator))")
 
