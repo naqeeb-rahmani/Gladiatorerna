@@ -720,7 +720,7 @@ while True:
 
 
     if antal_kämpade_strider == 0:
-        print(f"\nDu är gladiatorn {spelarens_namn}, nu ska du slåss mot en gladiator.\n" \
+        print(f"\nDu är tiggaren {spelarens_namn}, nu ska du slåss mot en gladiator.\n" \
 "Du får välja mellan vem du vill slå mot:\n"
 f"1. Drako: {Fore.RED}26{Style.RESET_ALL}hp har ingen rustning och kan ingen strategi. (erforderlig rank = 1)\n" \
 f"2. Maximus: {Fore.RED}34{Style.RESET_ALL}hp, har läderrustning, tar 1 mindre skada per attack, kör strategiskt och har vapnet den blodtörstiga kortsvärdet. (erforderlig rank = 2)\n" 
@@ -966,7 +966,7 @@ f"Just nu har du {Fore.BLUE}{spelarens_hp}{Style.RESET_ALL}hp.")
                 bossmusik.stop()
 
 
-        if (runda == 1 or runda == 2) and (val_av_motståndare == "Maximus" or val_av_motståndare == "Dominous"):
+        if (runda == 1 or runda == 2) and (val_av_motståndare == "Maximus" or val_av_motståndare == "Dominous") and motståndarens_hp > 0 and spelarens_hp > 0:
             vill_spelaren_ge_upp = input("\nVill du ge upp(ja/nej). Vid ja röstar folket om om du får gå, avrättas, eller att du måste fortsätta. ").lower()
             
             if vill_spelaren_ge_upp == "ja":
